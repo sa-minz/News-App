@@ -5,27 +5,37 @@ A full-stack news application developed using **React** for the frontend and **N
 ## 🚀 Features
 
 * 📰 Browse and display news articles
+* 🔍 Search for news articles by keyword
+* 🗂️ Browse news by category
 * 🔗 Frontend and backend integration
 * ⚛️ React-based user interface
 * 🟢 Node.js backend
 * 🔄 API-based communication
 * 📱 Responsive web interface
+* 🔐 API key stored securely using environment variables
 
 ## 🛠️ Technologies Used
 
-**Frontend**
+### Frontend
 
 * React
 * JavaScript
 * HTML
 * CSS
 
-**Backend**
+### Backend
 
 * Node.js
-* JavaScript
+* Express.js
+* Axios
+* CORS
+* dotenv
 
-**Tools**
+### API
+
+* NewsAPI
+
+### Tools
 
 * Git
 * GitHub
@@ -36,16 +46,19 @@ A full-stack news application developed using **React** for the frontend and **N
 ```text
 News-App
 │
+├── backend/
+│   ├── index.js
+│   ├── package.json
+│   └── package-lock.json
+│
 ├── frontend/
 │   ├── public/
 │   ├── src/
 │   ├── package.json
-│   └── README.md
+│   └── package-lock.json
 │
-└── backend/
-    ├── index.js
-    ├── package.json
-    └── package-lock.json
+├── .gitignore
+└── README.md
 ```
 
 ## ⚙️ Installation
@@ -64,26 +77,78 @@ cd backend
 npm install
 ```
 
-### 3. Start the backend
+### 3. Configure the News API key
 
-```bash
-node index.js
+Create a `.env` file inside the `backend` folder:
+
+```env
+NEWS_API_KEY=your_news_api_key
 ```
 
-### 4. Install frontend dependencies
+Replace `your_news_api_key` with your actual NewsAPI key.
 
-Open a new terminal:
+> **Note:** Never upload the `.env` file to GitHub. It is already excluded using `.gitignore`.
+
+### 4. Start the backend
+
+```bash
+npm start
+```
+
+The backend will run on:
+
+```text
+http://localhost:5000
+```
+
+### 5. Install frontend dependencies
+
+Open a **new terminal** and navigate to the frontend folder:
 
 ```bash
 cd frontend
 npm install
 ```
 
-### 5. Start the frontend
+### 6. Start the frontend
 
 ```bash
 npm start
 ```
+
+The application will open in your browser at:
+
+```text
+http://localhost:3000
+```
+
+## 🔌 API Endpoint
+
+The backend provides the following endpoint:
+
+```text
+GET /api/news
+```
+
+### Search by keyword
+
+```text
+http://localhost:5000/api/news?keyword=sri%20lanka
+```
+
+### Browse by category
+
+```text
+http://localhost:5000/api/news?category=technology
+```
+
+Supported categories include:
+
+* Technology
+* Business
+* Sports
+* Health
+* Entertainment
 
 ## 📚 Purpose
 
@@ -91,10 +156,18 @@ This project was developed to gain practical experience in:
 
 * Full-stack web development
 * React development
-* Node.js backend development
+* Node.js and Express.js
+* REST API integration
 * Frontend-backend communication
-* API integration
+* Asynchronous API requests
+* Environment variable management
 * Software Development
+
+## 🔐 Security
+
+The NewsAPI key is stored in an environment variable rather than being hard-coded into the application.
+
+The `.env` file is excluded from Git using `.gitignore`.
 
 ## 👩‍💻 Author
 

@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
 
-const categories = ["technology", "business", "sports", "health", "entertainment"];
+const categories = [
+  "technology",
+  "business",
+  "sports",
+  "health",
+  "entertainment",
+];
 
 function App() {
   const [keyword, setKeyword] = useState("");
@@ -13,7 +19,7 @@ function App() {
   const [error, setError] = useState("");
   const [slideIndex, setSlideIndex] = useState(0);
 
-  //category news
+  // Category news
   const fetchNews = async (category = "general") => {
     setLoading(true);
     setError("");
@@ -21,9 +27,10 @@ function App() {
     setArticles([]);
 
     try {
-      const res = await axios.get("http://localhost:5000/api/news", {
+      const res = await axios.get("/api/news", {
         params: { category },
       });
+
       setArticles(res.data.articles || []);
     } catch {
       setError("Failed to load headlines.");
@@ -36,18 +43,23 @@ function App() {
     fetchNews("general");
   }, []);
 
-  // Carousel 
+  // Carousel
   useEffect(() => {
     if (articles.length < 2) return;
+
     const interval = setInterval(() => {
-      setSlideIndex((prev) => (prev + 1) % Math.min(5, articles.length));
+      setSlideIndex(
+        (prev) => (prev + 1) % Math.min(5, articles.length)
+      );
     }, 4000);
+
     return () => clearInterval(interval);
   }, [articles]);
 
   // Search news
   const handleSearch = async (e) => {
     e.preventDefault();
+
     if (!keyword.trim()) return;
 
     setSearchTerm(keyword);
@@ -57,7 +69,7 @@ function App() {
     setError("");
 
     try {
-      const res = await axios.get("http://localhost:5000/api/news", {
+      const res = await axios.get("/api/news", {
         params: { keyword },
       });
 
@@ -74,7 +86,7 @@ function App() {
   };
 
   const heroSlides = articles.slice(0, 5);
-  const otherArticles = articles.slice(5, 40); // MORE CARDS ✔️
+  const otherArticles = articles.slice(5, 40);
 
   return (
     <div className="container">
@@ -88,7 +100,10 @@ function App() {
       <h1 className="brand">
         INSIGHT <span>DAILY</span>
       </h1>
-      <p className="tagline">Your window to the world, updated every moment</p>
+
+      <p className="tagline">
+        Your window to the world, updated every moment
+      </p>
 
       {/* Search */}
       <form className="search-form" onSubmit={handleSearch}>
@@ -98,6 +113,7 @@ function App() {
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
         />
+
         <button type="submit">Search</button>
       </form>
 
@@ -117,14 +133,14 @@ function App() {
         ))}
       </div>
 
-      {/* Results*/}
+      {/* Search Results */}
       {searchTerm && !loading && !error && (
         <p className="results-text">
           Results for <span>“{searchTerm}”</span>
         </p>
       )}
 
-      
+      {/* Error Message */}
       {error && !loading && (
         <div className="no-results">
           <h2>{error}</h2>
@@ -141,8 +157,12 @@ function App() {
               href={article.url}
               target="_blank"
               rel="noreferrer"
-              className={`carousel-slide ${index === slideIndex ? "active" : ""}`}
-              style={{ backgroundImage: `url(${article.urlToImage})` }}
+              className={`carousel-slide ${
+                index === slideIndex ? "active" : ""
+              }`}
+              style={{
+                backgroundImage: `url(${article.urlToImage})`,
+              }}
             >
               <div className="carousel-overlay">
                 <h2>{article.title}</h2>
@@ -153,12 +173,23 @@ function App() {
         </div>
       )}
 
-      {/* Grid */}
+      {/* Articles Grid */}
       <div className="articles-grid">
         {otherArticles.map((article, index) => (
-          <a key={index} href={article.url} target="_blank" rel="noreferrer">
+          <a
+            key={index}
+            href={article.url}
+            target="_blank"
+            rel="noreferrer"
+          >
             <div className="article-card">
-              {article.urlToImage && <img src={article.urlToImage} alt="" />}
+              {article.urlToImage && (
+                <img
+                  src={article.urlToImage}
+                  alt=""
+                />
+              )}
+
               <div className="article-content">
                 <h3>{article.title}</h3>
                 <p>{article.description}</p>
@@ -172,3 +203,4 @@ function App() {
 }
 
 export default App;
+
